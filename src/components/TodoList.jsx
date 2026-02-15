@@ -6,13 +6,8 @@ function TodoList() {
   const [input, setInput] = useState("");
 
   function addTodo() {
-    //if (input === "") return;
     if (!input.trim()) return;
 
-    // setTodos([
-    //   ...todos,
-    //   { id: Date.now(), text: input, completed: false }
-    // ]);
     setTodos((prev) => [
       ...prev,
       { id: Date.now(), text: input.trim(), completed: false },
