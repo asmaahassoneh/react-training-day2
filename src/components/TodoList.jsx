@@ -6,25 +6,30 @@ function TodoList() {
   const [input, setInput] = useState("");
 
   function addTodo() {
-    if (input === "") return;
+    //if (input === "") return;
+    if (!input.trim()) return;
 
-    setTodos([
-      ...todos,
-      { id: Date.now(), text: input, completed: false }
+    // setTodos([
+    //   ...todos,
+    //   { id: Date.now(), text: input, completed: false }
+    // ]);
+    setTodos((prev) => [
+      ...prev,
+      { id: Date.now(), text: input.trim(), completed: false },
     ]);
 
     setInput("");
   }
 
   function deleteTodo(id) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   }
 
   function toggleTodo(id) {
     setTodos(
-      todos.map(todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
     );
   }
 
@@ -40,16 +45,20 @@ function TodoList() {
 
       <button onClick={addTodo}>Add</button>
 
-      <ul>
-        {todos.map(todo => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            onDelete={deleteTodo}
-            onToggle={toggleTodo}
-          />
-        ))}
-      </ul>
+      {todos.length === 0 ? (
+        <p>No tasks yet</p>
+      ) : (
+        <ul>
+          {todos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onDelete={deleteTodo}
+              onToggle={toggleTodo}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
